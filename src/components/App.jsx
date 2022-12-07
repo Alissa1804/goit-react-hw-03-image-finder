@@ -19,12 +19,7 @@ class App extends Component {
   };
 
   componentDidUpdate(_, prevState) {
-    if (prevState.q !== this.state.q) {
-      this.setState({ pictures: [] });
-      this.getPictures();
-    }
-
-    if (prevState.page !== this.state.page && this.state.page !== 1) {
+    if (prevState.page !== this.state.page || prevState.q !== this.state.q) {
       this.getPictures();
     }
   }
@@ -69,7 +64,14 @@ class App extends Component {
       Notiflix.Notify.info('Please enter your search term.');
       return;
     }
-    this.setState({ q, page: 1 });
+    this.setState({
+      q,
+      page: 1,
+      pictures: [],
+      error: '',
+      loading: false,
+      currentPicture: null,
+    });
   };
 
   picturesLoading = () => {
